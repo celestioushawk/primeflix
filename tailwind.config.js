@@ -5,7 +5,14 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: () => ({
+        'login': "url('/src/assets/background-image.jpg')"
+      }),
+      fontFamily: {
+        'inter': ['Inter', 'sans-serif']
+      },
+    },
   },
   plugins: [],
 }
