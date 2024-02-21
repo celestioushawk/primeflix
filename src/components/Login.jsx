@@ -1,9 +1,12 @@
 import Header from "./Header";
 import { useRef, useState } from "react";
 import { formValidation } from "../utils/formValidation";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-
+    const navigate = useNavigate();
     const [isSignInForm, setIsSignInForm] = useState(true);
     const [errorMessage, setErrorMessage] = useState(null)
     const email = useRef(null);
@@ -20,6 +23,32 @@ const Login = () => {
         } else {
             setErrorMessage(formValidation(email.current.value, password.current.value, null, isSignInForm))
         }
+        if (errorMessage) {
+            return;
+        }
+        if (!isSignInForm) {
+            // Sign up
+            createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+                .then((userCredential) => {
+                    console.log(userCredential);
+                    setIsSignInForm(true);
+                })
+                .catch((error) => {
+                    setErrorMessage(error.message);
+                });
+        } else {
+            // Sign in
+            signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    console.log(user);
+                    navigate("/browse");
+                })
+                .catch((error) => {
+                    setErrorMessage(error.message);
+                });
+        }
+
     }
 
     return (
@@ -32,12 +61,12 @@ const Login = () => {
                     </h2>
                     <h2 className="text-lg font-medium text-white">Unlimited movies, TV shows, and more.</h2>
                     <h3 className="text-sm text-white">Watch anywhere. Cancel anytime.</h3>
-                    <form className="flex flex-col gap-4" onSubmit={ (e) => e.preventDefault() }>
+                    <form className="flex flex-col gap-4" onSubmit={(e) => e.preventDefault()}>
                         {!isSignInForm && <input type="text" ref={name} className="block w-full p-3 rounded bg-gray-300 outline-none" placeholder="Full Name" />}
                         <input type="email" ref={email} className="block w-full p-3 rounded bg-gray-300 outline-none" placeholder="Email address" />
                         <input type="password" ref={password} className="block w-full p-3 rounded bg-gray-300 outline-none" placeholder="Password" />
                         {errorMessage && <p className="text-red-600 text-sm">{errorMessage}</p>}
-                        <button className="block w-full p-3 rounded bg-red-600 text-white font-bold" onClick={handleFormSubmit}>
+                        <button className="block w-full p-3 rounded bg-red-600 hover:bg-red-700 text-white font-bold" onClick={handleFormSubmit}>
                             {isSignInForm ? "Sign In" : "Sign Up"}
                         </button>
                     </form>
