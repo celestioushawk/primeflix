@@ -38,8 +38,8 @@ const Header = () => {
 
 
     return (
-        <header className="absolute p-10 z-10 flex w-full justify-between">
-            <h1 className="text-3xl uppercase font-bold text-white">FlixNow</h1>
+        <header className="absolute p-10 z-20 flex w-full text-white bg-gradient-to-b from-black justify-between">
+            <h1 className="text-3xl uppercase font-bold">FlixNow</h1>
             { user && <button className="border bg-red-600 py-2 px-3 text-sm text-white" onClick={handleSignOut}>Sign Out</button> }
         </header>
     );

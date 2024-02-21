@@ -1,10 +1,15 @@
+import useNowPlayingMovies from "../hooks/useNowPlayingMovie";
 import Header from "./Header";
+import MainContainer from "./MainContainer";
 
 const Browse = () => {
+
+    useNowPlayingMovies();
+
     return (
-        <div className="bg-gray-500">
+        <div className="h-full">
             <Header />
-            <h1 className="text-blue-900">Browse</h1>
+            <MainContainer />
         </div>
     );
 }
