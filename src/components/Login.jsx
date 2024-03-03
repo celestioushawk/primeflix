@@ -55,7 +55,7 @@ const Login = () => {
         <div className="bg-login h-screen">
             <Header />
             <div className="flex justify-center items-center h-full">
-                <div className="h-full lg:h-fit w-full justify-center lg:w-1/3 bg-black rounded flex flex-col gap-4 bg-opacity-90 p-5 md:p-10 lg:p-16 z-10">
+                <div className="h-full lg:h-fit w-full justify-center lg:w-1/3 bg-black rounded flex flex-col gap-4 bg-opacity-90 p-5 md:p-10 z-10">
                     <h2 className="text-3xl font-bold text-white">
                         {isSignInForm ? "Sign In" : "Sign Up"}
                     </h2>

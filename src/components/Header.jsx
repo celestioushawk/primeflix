@@ -1,14 +1,16 @@
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { addUser, removeUser } from "../utils/userSlice";
+import UserMenu from "./UserMenu";
 
 const Header = () => {
     const navigate = useNavigate();
     const user = useSelector((store) => store.user)
     const dispatch = useDispatch();
+    const userMenuDiv = useRef(null);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -16,7 +18,7 @@ const Header = () => {
             if (user) {
                 const { uid, email, displayName } = user;
                 dispatch(addUser({ uid, email, displayName }))
-                navigate("/browse")
+                // navigate("/browse")
             } else {
                 // user is signed out
                 dispatch(removeUser())
@@ -28,19 +30,11 @@ const Header = () => {
 
     }, [])
 
-    const handleSignOut = () => {
-        signOut(auth).then(() => {
-            navigate("/")
-        }).catch((error) => {
-            console.log(error);
-        });
-    }
-
 
     return (
-        <header className="absolute p-10 z-20 flex w-full text-white bg-gradient-to-b from-black justify-between">
-            <h1 className="text-3xl uppercase font-bold">FlixNow</h1>
-            { user && <button className="border bg-red-600 py-2 px-3 text-sm text-white" onClick={handleSignOut}>Sign Out</button> }
+        <header className="absolute p-10 z-20 flex w-full text-white bg-gradient-to-b from-black justify-between items-center">
+            <h1 className="text-4xl uppercase font-bold">FlixNow</h1>
+            {user && <UserMenu user={user} userMenuDiv={userMenuDiv} />}
         </header>
     );
 }
