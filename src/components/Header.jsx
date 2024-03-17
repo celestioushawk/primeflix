@@ -1,10 +1,11 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef } from "react";
 import { addUser, removeUser } from "../utils/userSlice";
 import UserMenu from "./UserMenu";
+import Search from "./Search";
 
 const Header = () => {
     const navigate = useNavigate();
@@ -30,12 +31,16 @@ const Header = () => {
 
     }, [])
 
+    const showSearch = useSelector((state) => state.portal?.showSearch)
 
     return (
-        <header className="absolute p-10 z-20 flex w-full text-white bg-gradient-to-b from-black justify-between items-center">
-            <h1 className="text-4xl uppercase font-bold">FlixNow</h1>
-            {user && <UserMenu user={user} userMenuDiv={userMenuDiv} />}
-        </header>
+        <>
+            <header className="absolute px-10 py-5 z-20 flex w-full text-white bg-gradient-to-b from-black justify-between items-center">
+                <Link to={'/browse'}><h1 className="text-4xl uppercase font-bold text-red-600">FlixNow</h1></Link>
+                {user && <UserMenu user={user} userMenuDiv={userMenuDiv} />}
+            </header>
+            {showSearch && <Search />}
+        </>
     );
 }
 

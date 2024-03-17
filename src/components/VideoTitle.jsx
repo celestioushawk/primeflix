@@ -1,8 +1,8 @@
 const VideoTitle = ({ videoTitle, videoSummary }) => {
     return (
         <div className="flex flex-col gap-5 z-10 bg-gradient-to-r from-black h-full px-10 py-40 text-white">
-            <h1 className="text-5xl font-medium">{videoTitle}</h1>
-            <p className="text-sm w-1/2">{videoSummary}</p>
+            <h1 className="text-6xl font-medium">{videoTitle}</h1>
+            <p className="w-1/2">{videoSummary}</p>
             <div className="flex items-center gap-3">
                 <button className="px-5 py-3 inline-flex items-center gap-2 bg-white text-black text-sm rounded">
                     <span>

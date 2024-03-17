@@ -7,11 +7,13 @@ import { Link } from "react-router-dom";
 
 const MovieList = ({ title, movies }) => {
 
+    if (movies === null) return;
+
     const sliderRef = useRef(null);
 
     const settings = {
         dots: false,
-        infinite: true,
+        infinite: false,
         speed: 500,
         slidesToShow: 6,
         slidesToScroll: 4,
@@ -39,9 +41,9 @@ const MovieList = ({ title, movies }) => {
             </button>
             <h1 className="font-medium text-2xl text-white gap-5">{title}</h1>
             <Slider {...settings} ref={sliderRef}>
-                {movies?.map((movie) => {
-                    return <Link to={`/movie/${movie.id}`} key={movie.id}>
-                        <MovieCard key={movie.id} movie={movie} />
+                {movies.map((movie) => {
+                    return <Link to={`/movie/${movie?.id}`} key={movie?.id}>
+                        <MovieCard key={movie?.id} movie={movie} />
                     </Link>
                 })}
             </Slider>
